@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-family: 'Inter', 'IBM Plex Sans', system-ui, sans-serif; }
+  body { @apply bg-slate-50 text-gray-900 antialiased; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border-2 border-navy-600 text-navy-600 hover:bg-navy-600 hover:text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 bg-gold-400 hover:bg-gold-500 text-navy-700 font-bold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-sm;
+  }
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-200;
+  }
+  .input-field {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600 transition-all duration-150;
+  }
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest text-gold-500 mb-1;
+  }
+  .page-title {
+    @apply text-2xl font-bold text-navy-600;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full;
+  }
+}
+
+/* Spinner */
+.spinner {
+  @apply w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #1e3a5f; }
