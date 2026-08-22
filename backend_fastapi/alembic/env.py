@@ -10,6 +10,8 @@ load_dotenv()
 from app.core.database import Base  # noqa: F401
 import app.models.user  # noqa: F401
 import app.models.legal_document  # noqa: F401
+import app.models.analysis_result  # noqa: F401
+import app.models.judicial_analysis_result  # noqa: F401
 
 config = context.config
 config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"])

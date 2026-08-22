@@ -52,12 +52,12 @@ const FEATURES = [
 
 const STATS = [
   { value: "500+", label: "Legal Documents" },
-  { value: "6",    label: "User Roles" },
+  { value: "4",    label: "User Roles" },
   { value: "AI",   label: "Powered Search" },
   { value: "24/7", label: "Availability" },
 ];
 
-const ROLES = ["Citizens", "Lawyers", "Judges", "Police Officers", "Legal Researchers", "Law Students"];
+const ROLES = ["Citizen", "Judge", "Lawyers", "Investigation Officer"];
 
 function FeatureCard({ icon: Icon, title, desc, badge, color }) {
   return (
@@ -140,25 +140,6 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {FEATURES.map((f) => <FeatureCard key={f.title} {...f} />)}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-gradient-to-br from-navy-600 to-navy-800 rounded-3xl p-10 text-center">
-        <div className="w-14 h-14 bg-gold-400 rounded-2xl flex items-center justify-center mx-auto mb-5">
-          <Scale size={26} className="text-navy-700" strokeWidth={2.5} />
-        </div>
-        <h2 className="text-2xl font-bold text-white mb-3">Ready to Transform Your Legal Research?</h2>
-        <p className="text-navy-200 text-sm mb-7 max-w-md mx-auto">
-          Join legal professionals across India using NyayaAI for faster, smarter legal research.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-3">
-          <Link to="/register" className="btn-gold px-8 py-3 rounded-2xl text-base">
-            Create Free Account <ArrowRight size={16} />
-          </Link>
-          <Link to="/login" className="inline-flex items-center justify-center gap-2 border-2 border-white/30 text-white hover:bg-white/10 font-semibold text-base px-8 py-3 rounded-2xl transition-all">
-            Sign In
-          </Link>
         </div>
       </section>
 

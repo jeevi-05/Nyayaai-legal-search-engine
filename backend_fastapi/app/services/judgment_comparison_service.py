@@ -193,8 +193,8 @@ class JudgmentComparisonService:
         - Semantic matches with evidence
         """
         # Get judgments from database
-        judgment_a = document_repository.get_by_external_id(db, judgment_a_id)
-        judgment_b = document_repository.get_by_external_id(db, judgment_b_id)
+        judgment_a = self._get_judgment(db, judgment_a_id)
+        judgment_b = self._get_judgment(db, judgment_b_id)
         
         if not judgment_a or not judgment_b:
             return {
@@ -252,16 +252,45 @@ class JudgmentComparisonService:
         overall_similarity = self._calculate_overall_similarity(
             embeddings_a, embeddings_b
         )
+
+        legal_similarity = self.calculate_legal_similarity(structured_a, structured_b, overall_similarity)
+        precedent_treatment = self.compare_precedents(judgment_a, judgment_b)
         
         return {
             "judgment_a": self._format_judgment(judgment_a),
             "judgment_b": self._format_judgment(judgment_b),
             "overall_similarity": round(overall_similarity * 100, 2),
+            "legal_similarity": legal_similarity,
             "comparison": comparison,
+            "precedent_treatment": precedent_treatment,
+            "source_citations": [self._source_citation(judgment_a), self._source_citation(judgment_b)],
             "semantic_matches": aligned_chunks,
             "chunk_count_a": len(chunks_a),
             "chunk_count_b": len(chunks_b)
         }
+
+    def calculate_legal_similarity(self, a: Dict, b: Dict, text_similarity: float) -> Dict[str, float]:
+        """Explainable composite score; legal dimensions are not collapsed into text overlap."""
+        issue = self._estimate_similarity(a.get("legal_issues", ""), b.get("legal_issues", ""))
+        statutes = self._calculate_jaccard_similarity(set(a.get("statutes", [])), set(b.get("statutes", [])))
+        precedents = self._calculate_jaccard_similarity(set(a.get("precedents", [])), set(b.get("precedents", [])))
+        overall = text_similarity * .35 + issue * .35 + statutes * .20 + precedents * .10
+        return {"text_similarity": round(text_similarity * 100, 2), "legal_issue_similarity": round(issue * 100, 2), "statutory_similarity": round(statutes * 100, 2), "precedent_similarity": round(precedents * 100, 2), "overall_legal_similarity": round(overall * 100, 2)}
+
+    def compare_precedents(self, judgment_a, judgment_b) -> Dict[str, Dict[str, List[str]]]:
+        def treatment(text: str) -> Dict[str, List[str]]:
+            output = {"followed": [], "distinguished": [], "overruled": [], "referred": []}
+            for case in self._extract_precedents(text):
+                index = text.lower().find(case.lower())
+                window = text[max(0, index - 160):index + len(case) + 160].lower()
+                label = "followed" if re.search(r"followed|relied upon|approved", window) else "distinguished" if "distinguish" in window else "overruled" if "overruled" in window else "referred"
+                output[label].append(case)
+            return output
+        return {"judgment_a": treatment(judgment_a.judgment_text or ""), "judgment_b": treatment(judgment_b.judgment_text or "")}
+
+    @staticmethod
+    def _source_citation(judgment) -> Dict[str, Any]:
+        return {"case_name": judgment.case_name or judgment.title, "paragraph_number": 1, "indian_kanoon_id": judgment.external_id, "link": judgment.document_url}
     
     def _generate_chunk_embeddings(self, chunks: List[Dict]) -> List[List[float]]:
         """Generate embeddings for chunks."""
@@ -271,6 +300,18 @@ class JudgmentComparisonService:
             if embedding:
                 embeddings.append(embedding)
         return embeddings
+
+    @staticmethod
+    def _get_judgment(db: Session, judgment_id: str):
+        """Accept both Indian Kanoon IDs and locally uploaded/repository integer IDs."""
+        judgment = document_repository.get_by_external_id(db, judgment_id)
+        if judgment:
+            return judgment
+        try:
+            from app.models.legal_document import LegalDocument
+            return db.query(LegalDocument).filter(LegalDocument.id == int(judgment_id)).first()
+        except (TypeError, ValueError):
+            return None
     
     def _calculate_similarity_matrix(
         self,

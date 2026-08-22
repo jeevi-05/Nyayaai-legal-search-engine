@@ -68,6 +68,7 @@ export default function Navbar() {
                 <LayoutDashboard size={15} />
                 Dashboard
               </Link>
+              {user.role === "JUDGE" && <span className="text-gold-400 text-[10px] font-bold uppercase tracking-wider px-1">Judicial Intelligence</span>}
               {navFeatures.map(({ id, name, path }) => {
                 const Icon = getNavIcon(id);
                 return (
@@ -231,6 +232,10 @@ function getNavIcon(featureId) {
     'judgment-comparison': GitCompare,
     'legal-reasoning': Brain,
     'legal-trends': TrendingUp,
+    'judge-comparison': GitCompare,
+    'judge-precedents': Search,
+    'judge-reasoning': Brain,
+    'judge-synthesis': Scale,
     'advanced-search': Search,
     'case-law-research': Scale,
     'document-analysis': FileText,

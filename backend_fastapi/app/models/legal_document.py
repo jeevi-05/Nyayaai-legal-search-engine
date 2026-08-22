@@ -66,6 +66,14 @@ class LegalDocument(Base):
 
     )
 
+    # Normalised judicial-document metadata.  Legacy fields remain for compatibility.
+    case_name = Column(String, nullable=True, index=True)
+    bench = Column(String, nullable=True)
+    judgment_date = Column(String, nullable=True)
+    acts = Column(Text, nullable=True)
+    sections = Column(Text, nullable=True)
+    paragraphs = Column(Text, nullable=True)  # JSON: [{number, text}]
+
 
 
     short_title = Column(

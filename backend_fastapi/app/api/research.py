@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, status
 from fastapi.responses import FileResponse, JSONResponse
 from sqlalchemy.orm import Session
 
-from app.core.database import get_db
+from app.core.database import get_db, SessionLocal
 from app.middleware.auth import get_current_user
 from app.models.legal_document import LegalDocument, DocumentCategory
 from app.repositories import document_repository
@@ -56,7 +56,7 @@ def search_cases(
     ik_raw        = indian_kanoon_service.search_judgments(query)
 
     if ik_raw:
-        background_tasks.add_task(_ingest_ik_results, db, ik_raw)
+        background_tasks.add_task(_ingest_ik_results, ik_raw)
 
     ik_results = [_ik_to_result(r) for r in ik_raw]
     combined   = _merge_and_deduplicate(local_results, ik_results)
@@ -410,12 +410,18 @@ def _get_similar(db, doc) -> list:
         return []
 
 
-def _ingest_ik_results(db: Session, ik_raw: list[dict]) -> None:
-    for item in ik_raw:
-        try:
-            ingest_ik_result(db, item)
-        except Exception:
-            pass
+def _ingest_ik_results(ik_raw: list[dict]) -> None:
+    """Use a task-owned session; request sessions are closed before background work."""
+    db = SessionLocal()
+    try:
+        for item in ik_raw:
+            try:
+                ingest_ik_result(db, item)
+            except Exception:
+                logger.exception("Indian Kanoon ingestion failed for %s", item.get("doc_id"))
+                db.rollback()
+    finally:
+        db.close()
 
 
 def _ik_to_result(r: dict) -> dict:

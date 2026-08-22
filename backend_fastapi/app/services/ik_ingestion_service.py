@@ -14,6 +14,9 @@ from app.repositories import document_repository
 from app.services.pdf_download_service import download_and_save, generate_pdf_from_text
 from app.services.pdf_processor import extract_text, generate_summary
 from app.services.embedding_service import EmbeddingService
+from app.services.indian_kanoon_service import fetch_document_metadata
+from app.services.legal_document_processor import legal_document_processor
+from app.services.case_processing_service import process_judgment
 
 _embedding_service = EmbeddingService()
 
@@ -44,14 +47,20 @@ def ingest_ik_result(db: Session, ik_result: dict) -> LegalDocument | None:
         logger.debug("IK doc_id={} already in DB — skipping", doc_id)
         return document_repository.get_by_external_id(db, doc_id)
 
-    title   = ik_result.get("title", "Untitled")
-    snippet = ik_result.get("snippet", "")
+    # Always fetch the full document before processing; a search snippet is never
+    # used as the canonical judgment text.
+    full_metadata = fetch_document_metadata(doc_id) or {}
+    title = full_metadata.get("title") or ik_result.get("title", "Untitled")
+    snippet = full_metadata.get("snippet") or ik_result.get("snippet", "")
+    judgment_text = full_metadata.get("judgment_text", "")
+    processed_document = legal_document_processor.process(judgment_text, {**ik_result, **full_metadata})
+    case_parts = process_judgment(processed_document["text"])
 
     # ── 2. Download or generate PDF ────────────────────────────────────────────
     pdf_path = None
     try:
         # First try to get judgment text from IK
-        judgment_text = _fetch_judgment_text(doc_id)
+        judgment_text = processed_document["text"]
         
         if judgment_text and judgment_text.strip():
             # Always generate PDF from judgment_text (fallback)
@@ -71,11 +80,11 @@ def ingest_ik_result(db: Session, ik_result: dict) -> LegalDocument | None:
             logger.warning("Text extraction failed for {}: {}", pdf_path, e)
 
     # Fall back to snippet if PDF text unavailable
-    text_for_ai = extracted_text or snippet or title
+    text_for_ai = extracted_text or processed_document["text"] or snippet or title
 
     # ── 4. Summary + embedding ────────────────────────────────────────────────
     summary = generate_summary(text_for_ai)
-    embedding = _embedding_service.embed(text_for_ai)
+    embedding = processed_document["embedding"] or _embedding_service.embed(text_for_ai)
     embedding_json = json.dumps(embedding)
 
     # ── 5. Persist ────────────────────────────────────────────────────────────
@@ -84,13 +93,19 @@ def ingest_ik_result(db: Session, ik_result: dict) -> LegalDocument | None:
 
     doc = LegalDocument(
         title          = title,
+        case_name      = processed_document["metadata"]["case_name"],
+        bench          = processed_document["metadata"]["bench"],
+        judgment_date  = processed_document["metadata"]["date"],
+        acts           = json.dumps(processed_document["entities"]["acts"]),
+        sections       = json.dumps(processed_document["entities"]["sections"]),
+        paragraphs     = json.dumps(processed_document["paragraphs"]),
         source_file    = source_file,
         file_path      = pdf_path or source_file,
         category       = DocumentCategory.JUDGMENT,
         description    = snippet,
         citation       = ik_result.get("citation", ""),
-        year           = ik_result.get("year"),
-        court          = ik_result.get("court", ""),
+        year           = processed_document["metadata"]["year"],
+        court          = processed_document["metadata"]["court"],
         source         = "indian_kanoon",
         external_id    = doc_id,
         document_url   = ik_result.get("document_url", ""),
@@ -98,6 +113,14 @@ def ingest_ik_result(db: Session, ik_result: dict) -> LegalDocument | None:
         case_type      = "JUDGMENT",
         file_type      = "PDF" if pdf_path else "JSON",
         extracted_text = extracted_text,
+        judgment_text  = processed_document["text"],
+        acts_sections  = ", ".join(processed_document["entities"]["acts"] + processed_document["entities"]["sections"]),
+        judges         = processed_document["metadata"]["bench"],
+        case_facts     = case_parts.get("case_facts", ""),
+        legal_issues   = case_parts.get("legal_issues", ""),
+        arguments      = case_parts.get("arguments", ""),
+        court_reasoning= case_parts.get("court_reasoning", ""),
+        final_decision = case_parts.get("final_decision", ""),
         summary        = summary,
         embedding      = embedding_json,
         uploaded_by    = "indian_kanoon",

@@ -21,10 +21,12 @@ export const MODES = {
     navColor: 'text-blue-100 hover:text-white hover:bg-white/10',
     activeColor: 'bg-blue-400 text-blue-700',
     features: [
+      { id: 'judge-comparison', name: 'Compare Judgments', description: 'Compare multiple judgments using AI.', icon: '⚖️', path: '/judge/judgment-comparison' },
+      { id: 'judge-precedents', name: 'Analyze Precedents', description: 'Understand precedent influence.', icon: '🔍', path: '/judge/precedent-analysis' },
+      { id: 'judge-reasoning', name: 'Extract Legal Reasoning', description: 'Identify judicial reasoning structure.', icon: '🧠', path: '/judge/legal-reasoning' },
+      { id: 'judge-synthesis', name: 'Synthesize Case Law', description: 'Generate legal evolution analysis.', icon: '📚', path: '/judge/case-law-synthesis' },
       { id: 'legal-research', name: 'Legal Research', description: 'Search and explore judgments and legal provisions', icon: '📚', path: '/research' },
-      { id: 'precedent-research', name: 'Precedent Research', description: 'Identify and compare legally relevant precedents', icon: '🔍', status: 'coming-soon' },
       { id: 'judgment-analysis', name: 'Judgment Analysis', description: 'Use the existing document/case analysis functionality', icon: '📄', path: '/case-research-upload' },
-      { id: 'judgment-comparison', name: 'Compare Judgments', description: 'Compare two judgments using semantic embeddings', icon: '⚖️', path: '/compare-judgments' },
       { id: 'legal-reasoning', name: 'Legal Reasoning', description: 'AI-assisted legal reasoning assistance', icon: '🧠', status: 'coming-soon' },
       { id: 'legal-trends', name: 'Legal Trends', description: 'Analyze legal trends and patterns', icon: '📈', status: 'coming-soon' },
     ]

@@ -30,6 +30,13 @@ export const ROLE_NAMES = {
   ADMIN: 'Admin'
 };
 
+export const JUDGE_NAV_FEATURES = [
+  { id: 'judge-comparison', name: 'Judgment Comparison', path: '/judge/judgment-comparison' },
+  { id: 'judge-precedents', name: 'Precedent Analysis', path: '/judge/precedent-analysis' },
+  { id: 'judge-reasoning', name: 'Legal Reasoning', path: '/judge/legal-reasoning' },
+  { id: 'judge-synthesis', name: 'Case-law Synthesis', path: '/judge/case-law-synthesis' },
+];
+
 // Role-based navigation configuration
 export const ROLE_FEATURES = {
   JUDGE: [
@@ -71,6 +78,7 @@ export const getModeForRole = (role) => {
 
 // Get features for a role
 export const getRoleFeatures = (role) => {
+  if (role === 'JUDGE') return JUDGE_NAV_FEATURES;
   return ROLE_FEATURES[role] || ROLE_FEATURES.CIVILIAN;
 };
 

@@ -16,6 +16,8 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import ModeSelectionPage from "./pages/ModeSelectionPage";
 import JudgmentComparisonPage from "./pages/JudgmentComparisonPage";
+import JudgeRoute from "./components/JudgeRoute";
+import { JudgeJudgmentComparisonPage, JudgePrecedentAnalysisPage, JudgeLegalReasoningPage, JudgeCaseLawSynthesisPage } from "./pages/judge/JudicialIntelligencePages";
 
 import RepositoryPage from "./pages/RepositoryPage";
 import UploadPage from "./pages/UploadPage";
@@ -90,6 +92,11 @@ element={<RegisterPage />}
 {/* DASHBOARD - Role-based */}
 
 <Route element={<ModeLayout />}>
+
+<Route path="/judge/judgment-comparison" element={<JudgeRoute><JudgeJudgmentComparisonPage /></JudgeRoute>} />
+<Route path="/judge/precedent-analysis" element={<JudgeRoute><JudgePrecedentAnalysisPage /></JudgeRoute>} />
+<Route path="/judge/legal-reasoning" element={<JudgeRoute><JudgeLegalReasoningPage /></JudgeRoute>} />
+<Route path="/judge/case-law-synthesis" element={<JudgeRoute><JudgeCaseLawSynthesisPage /></JudgeRoute>} />
 <Route
 path="/dashboard"
 element={

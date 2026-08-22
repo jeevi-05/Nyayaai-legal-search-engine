@@ -38,6 +38,13 @@ def require_admin(current_user: User = Depends(get_current_user)) -> User:
     return current_user
 
 
+def require_judge(current_user: User = Depends(get_current_user)) -> User:
+    """Guard the judicial-intelligence surface from all non-judge roles."""
+    if current_user.role != Role.JUDGE:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Judge access required")
+    return current_user
+
+
 def require_role(*allowed_roles):
     """Dependency to require specific user roles."""
     def dependency(current_user: User = Depends(get_current_user)) -> User:

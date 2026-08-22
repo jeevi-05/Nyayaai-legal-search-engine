@@ -17,7 +17,8 @@ from app.api import (
     dashboard,
     health,
     research,
-    judgment_comparison
+    judgment_comparison,
+    judge,
 )
 
 from app.services import dataset_loader
@@ -173,6 +174,11 @@ app.include_router(
 
 app.include_router(
     judgment_comparison.router,
+    prefix=API_PREFIX
+)
+
+app.include_router(
+    judge.router,
     prefix=API_PREFIX
 )
 

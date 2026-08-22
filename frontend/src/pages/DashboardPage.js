@@ -59,6 +59,10 @@ const FEATURE_ICONS = {
   'citizen-legal-research': Search,
   'citizen-legal-repository': BookOpen,
   'citizen-case-analysis': FileText,
+  'judge-comparison': Scale,
+  'judge-precedents': Search,
+  'judge-reasoning': Brain,
+  'judge-synthesis': BookOpen,
 };
 
 function getFeatureIcon(featureId) {
@@ -71,6 +75,10 @@ function getFeatureColor(featureId) {
     'citizen-legal-research': 'bg-blue-50 text-blue-600',
     'citizen-legal-repository': 'bg-purple-50 text-purple-600',
     'citizen-case-analysis': 'bg-amber-50 text-amber-600',
+    'judge-comparison': 'bg-purple-50 text-purple-600',
+    'judge-precedents': 'bg-blue-50 text-blue-600',
+    'judge-reasoning': 'bg-amber-50 text-amber-600',
+    'judge-synthesis': 'bg-emerald-50 text-emerald-600',
   };
   return colors[featureId] || 'bg-blue-50 text-blue-600';
 }
