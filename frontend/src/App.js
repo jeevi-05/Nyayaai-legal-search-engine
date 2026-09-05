@@ -17,6 +17,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ModeSelectionPage from "./pages/ModeSelectionPage";
 import JudgmentComparisonPage from "./pages/JudgmentComparisonPage";
 import JudgeRoute from "./components/JudgeRoute";
+import LawyerRoute from "./components/LawyerRoute";
 import { JudgeJudgmentComparisonPage, JudgePrecedentAnalysisPage, JudgeLegalReasoningPage, JudgeCaseLawSynthesisPage } from "./pages/judge/JudicialIntelligencePages";
 
 import RepositoryPage from "./pages/RepositoryPage";
@@ -30,6 +31,10 @@ import CitizenAskQuestionPage from "./pages/citizen/CitizenAskQuestionPage";
 import CitizenLegalResearchPage from "./pages/citizen/CitizenLegalResearchPage";
 import CitizenLegalRepositoryPage from "./pages/citizen/CitizenLegalRepositoryPage";
 import CitizenCaseAnalysisPage from "./pages/citizen/CitizenCaseAnalysisPage";
+import AdvancedResearch from "./pages/lawyer/AdvancedResearch";
+import ArgumentResearch from "./pages/lawyer/ArgumentResearch";
+import CitationFinder from "./pages/lawyer/CitationFinder";
+import CaseBriefGenerator from "./pages/lawyer/CaseBriefGenerator";
 
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -97,6 +102,11 @@ element={<RegisterPage />}
 <Route path="/judge/precedent-analysis" element={<JudgeRoute><JudgePrecedentAnalysisPage /></JudgeRoute>} />
 <Route path="/judge/legal-reasoning" element={<JudgeRoute><JudgeLegalReasoningPage /></JudgeRoute>} />
 <Route path="/judge/case-law-synthesis" element={<JudgeRoute><JudgeCaseLawSynthesisPage /></JudgeRoute>} />
+<Route path="/lawyer/dashboard" element={<LawyerRoute><DashboardPage /></LawyerRoute>} />
+<Route path="/lawyer/advanced-research" element={<LawyerRoute><AdvancedResearch /></LawyerRoute>} />
+<Route path="/lawyer/argument-research" element={<LawyerRoute><ArgumentResearch /></LawyerRoute>} />
+<Route path="/lawyer/citation-finder" element={<LawyerRoute><CitationFinder /></LawyerRoute>} />
+<Route path="/lawyer/case-brief-generation" element={<LawyerRoute><CaseBriefGenerator /></LawyerRoute>} />
 <Route
 path="/dashboard"
 element={

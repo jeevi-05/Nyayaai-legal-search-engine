@@ -42,13 +42,18 @@ export const MODES = {
     border: 'border-indigo-200',
     navColor: 'text-indigo-100 hover:text-white hover:bg-white/10',
     activeColor: 'bg-indigo-400 text-indigo-700',
-    features: [
+    features: /* retired lawyer navigation [
       { id: 'advanced-search', name: 'Advanced Legal Search', description: 'Use the existing search engine', icon: '🔍', path: '/research' },
       { id: 'case-law-research', name: 'Case Law Research', description: 'Use the existing case/judgment repository', icon: '⚖️', path: '/repository' },
       { id: 'document-analysis', name: 'Legal Document Analysis', description: 'Use the existing document processing functionality', icon: '📄', path: '/upload' },
       { id: 'citation-finder', name: 'Citation Finder', description: 'Find and verify legal citations automatically', icon: '📝', status: 'coming-soon' },
       { id: 'argument-research', name: 'Argument Research', description: 'Research legal arguments and precedents', icon: '🗣️', status: 'coming-soon' },
       { id: 'case-brief-generator', name: 'Case Brief Generator', description: 'Generate case briefs and summaries', icon: '📋', status: 'coming-soon' },
+    ] */ [
+      { id: 'advanced-research', name: 'Advanced Research', description: 'AI-powered legal research using Indian Kanoon judgments, acts and precedents.', icon: '🔍', path: '/lawyer/advanced-research' },
+      { id: 'argument-research', name: 'Argument Research', description: 'Generate arguments, supporting authorities and counter arguments.', icon: '🗣️', path: '/lawyer/argument-research' },
+      { id: 'citation-finder', name: 'Citation Finder', description: 'Find supporting judgments and legal authorities for legal propositions.', icon: '📝', path: '/lawyer/citation-finder' },
+      { id: 'case-brief-generation', name: 'Case Brief Generation', description: 'Convert lengthy judgments into structured advocate briefs.', icon: '📋', path: '/lawyer/case-brief-generation' },
     ]
   },
   INVESTIGATION: {

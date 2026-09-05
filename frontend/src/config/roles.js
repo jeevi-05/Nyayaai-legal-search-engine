@@ -48,12 +48,10 @@ export const ROLE_FEATURES = {
     { id: 'legal-trends', name: 'Legal Trends', path: '/research', icon: '📈' },
   ],
   LAWYER: [
-    { id: 'advanced-search', name: 'Advanced Search', path: '/research', icon: '🔍' },
-    { id: 'case-law-research', name: 'Case Law Research', path: '/repository', icon: '⚖️' },
-    { id: 'document-analysis', name: 'Document Analysis', path: '/upload', icon: '📄' },
-    { id: 'citation-finder', name: 'Citation Finder', path: '/research', icon: '📝' },
-    { id: 'argument-research', name: 'Argument Research', path: '/research', icon: '🗣️' },
-    { id: 'case-brief-generator', name: 'Case Brief Generator', path: '/upload', icon: '📋' },
+    { id: 'advanced-search', name: 'Advanced Research', path: '/lawyer/advanced-research', icon: '🔍' },
+    { id: 'argument-research', name: 'Argument Research', path: '/lawyer/argument-research', icon: '🗣️' },
+    { id: 'citation-finder', name: 'Citation Finder', path: '/lawyer/citation-finder', icon: '📝' },
+    { id: 'case-brief-generation', name: 'Case Brief Generation', path: '/lawyer/case-brief-generation', icon: '📋' },
   ],
   POLICE: [
     { id: 'criminal-case-research', name: 'Criminal Case Research', path: '/research', icon: '🔍' },

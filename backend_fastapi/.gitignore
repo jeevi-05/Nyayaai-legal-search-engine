@@ -1,4 +1,5 @@
 __pycache__/
+*.db
 *.py[cod]
 *.pyo
 .env
@@ -11,3 +12,4 @@ build/
 uploads/
 *.log
 alembic/versions/*.py
+!alembic/versions/20260822_01_add_lawyer_analysis_results.py
