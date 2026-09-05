@@ -92,6 +92,7 @@ export const MODES = {
       { id: 'citizen-legal-research', name: 'Legal Research', description: 'Search cases, acts and judgments', icon: '🔍', path: '/citizen/legal-research' },
       { id: 'citizen-legal-repository', name: 'Legal Repository', description: 'Explore Indian legal documents', icon: '📚', path: '/citizen/legal-repository' },
       { id: 'citizen-case-analysis', name: 'Case Analysis', description: 'Upload documents and get AI insights', icon: '📄', path: '/citizen/case-analysis' },
+      { id: 'citizen-find-lawyer', name: 'Find a Lawyer', description: 'Find lawyers associated with relevant court cases', icon: '⚖️', path: '/find-lawyer' },
     ]
   }
 };

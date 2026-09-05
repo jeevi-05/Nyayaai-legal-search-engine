@@ -31,6 +31,7 @@ import CitizenAskQuestionPage from "./pages/citizen/CitizenAskQuestionPage";
 import CitizenLegalResearchPage from "./pages/citizen/CitizenLegalResearchPage";
 import CitizenLegalRepositoryPage from "./pages/citizen/CitizenLegalRepositoryPage";
 import CitizenCaseAnalysisPage from "./pages/citizen/CitizenCaseAnalysisPage";
+import FindLawyerPage, { LawyerProfilePage, LawyerCaseDetailPage } from "./pages/citizen/FindLawyerPage";
 import AdvancedResearch from "./pages/lawyer/AdvancedResearch";
 import ArgumentResearch from "./pages/lawyer/ArgumentResearch";
 import CitationFinder from "./pages/lawyer/CitationFinder";
@@ -115,6 +116,9 @@ element={
 </ProtectedRoute>
 }
 />
+<Route path="/find-lawyer" element={<ProtectedRoute><FindLawyerPage /></ProtectedRoute>} />
+<Route path="/find-lawyer/:lawyerId" element={<ProtectedRoute><LawyerProfilePage /></ProtectedRoute>} />
+<Route path="/find-lawyer/case/:cnr" element={<ProtectedRoute><LawyerCaseDetailPage /></ProtectedRoute>} />
 </Route>
 
 

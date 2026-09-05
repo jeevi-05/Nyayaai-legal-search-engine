@@ -20,6 +20,7 @@ from app.api import (
     judgment_comparison,
     judge,
     lawyer,
+    citizen_lawyers,
 )
 
 from app.services import dataset_loader
@@ -185,6 +186,11 @@ app.include_router(
 
 app.include_router(
     lawyer.router,
+    prefix=API_PREFIX
+)
+
+app.include_router(
+    citizen_lawyers.router,
     prefix=API_PREFIX
 )
 

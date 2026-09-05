@@ -245,6 +245,7 @@ function getNavIcon(featureId) {
     'citizen-legal-research': Search,
     'citizen-legal-repository': FileText,
     'citizen-case-analysis': FileText,
+    'citizen-find-lawyer': Scale,
     'ask-question': Scale,
     'explain-document': FileText,
     'find-laws': Search,

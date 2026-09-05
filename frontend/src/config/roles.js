@@ -66,6 +66,7 @@ export const ROLE_FEATURES = {
     { id: 'citizen-legal-research', name: 'Legal Research', path: '/citizen/legal-research', icon: '🔍' },
     { id: 'citizen-legal-repository', name: 'Legal Repository', path: '/citizen/legal-repository', icon: '📚' },
     { id: 'citizen-case-analysis', name: 'Case Analysis', path: '/citizen/case-analysis', icon: '📄' },
+    { id: 'citizen-find-lawyer', name: 'Find a Lawyer', path: '/find-lawyer', icon: '⚖️' },
   ]
 };
 

@@ -83,6 +83,20 @@ function getFeatureColor(featureId) {
   return colors[featureId] || 'bg-blue-50 text-blue-600';
 }
 
+const JUDGE_ACTIONS = [
+  { id: 'judge-comparison', name: 'Compare Judgments', description: 'Compare multiple judgments using AI.', path: '/judge/judgment-comparison' },
+  { id: 'judge-precedents', name: 'Analyze Precedents', description: 'Understand precedent influence.', path: '/judge/precedent-analysis' },
+  { id: 'judge-reasoning', name: 'Extract Legal Reasoning', description: 'Identify judicial reasoning structure.', path: '/judge/legal-reasoning' },
+  { id: 'judge-synthesis', name: 'Synthesize Case Law', description: 'Generate legal evolution analysis.', path: '/judge/case-law-synthesis' },
+];
+
+const JUDGE_MODE = {
+  id: 'judicial',
+  name: 'Judicial Intelligence',
+  description: 'For judges, judicial officers and court researchers',
+  icon: '⚖️',
+};
+
 function LawyerDashboard({ user, documentCount, mode }) {
   const lawyerActions = [
     { title: "Advanced Research", desc: "AI-powered legal research using Indian Kanoon judgments, acts and precedents.", path: "/lawyer/advanced-research", icon: Search, color: "bg-blue-50 text-blue-600" },
@@ -134,8 +148,11 @@ export default function DashboardPage() {
     { id: "citizen-legal-research", name: "Legal Research", description: "Search cases, acts and judgments", path: "/citizen/legal-research" },
     { id: "citizen-legal-repository", name: "Legal Repository", description: "Explore Indian legal documents", path: "/citizen/legal-repository" },
     { id: "citizen-case-analysis", name: "Case Analysis", description: "Upload documents and get AI insights", path: "/citizen/case-analysis" },
+    { id: "citizen-find-lawyer", name: "Find a Lawyer", description: "Find lawyers associated with relevant court cases", path: "/find-lawyer" },
   ];
-  const quickActions = user?.role === "CIVILIAN" ? citizenActions : mode.features.slice(0, 4);
+  const isJudge = user?.role === "JUDGE";
+  const dashboardMode = isJudge ? JUDGE_MODE : mode;
+  const quickActions = isJudge ? JUDGE_ACTIONS : user?.role === "CIVILIAN" ? citizenActions : mode.features.slice(0, 4);
 
   if (user?.role === "LAWYER") return <LawyerDashboard user={user} documentCount={documentCount} mode={mode} />;
 
@@ -163,11 +180,11 @@ export default function DashboardPage() {
       <div className="bg-navy-50 border border-navy-100 rounded-2xl p-5">
         <div className="flex items-start gap-3">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-navy-100">
-            <span className="text-2xl">{mode.icon}</span>
+            <span className="text-2xl">{dashboardMode.icon}</span>
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-navy-900">{mode.name}</h3>
-            <p className="text-sm text-navy-700 mt-1">{mode.description}</p>
+            <h3 className="font-semibold text-navy-900">{dashboardMode.name}</h3>
+            <p className="text-sm text-navy-700 mt-1">{dashboardMode.description}</p>
           </div>
         </div>
       </div>
@@ -198,7 +215,7 @@ export default function DashboardPage() {
                 desc={feature.description}
                 path={feature.path || "/research"}
                 color={color}
-                mode={mode.id}
+                mode={dashboardMode.id}
               />
             );
           })}

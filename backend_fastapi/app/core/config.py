@@ -29,6 +29,10 @@ class Settings(BaseSettings):
     # Indian Kanoon API
     INDIAN_KANOON_API_TOKEN: str = ""
 
+    # eCourtsIndia Partner API; never expose these values to the frontend.
+    ECOURTS_API_TOKEN: str = ""
+    ECOURTS_API_BASE_URL: str = "https://webapi.ecourtsindia.com"
+
     @property
     def allowed_origins_list(self) -> list[str]:
         return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]
