@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { AlertCircle, UserPlus, User, Briefcase, Gavel, Shield } from "lucide-react";
+import { AlertCircle, UserPlus, User, Briefcase, Gavel } from "lucide-react";
+import { getErrorMessage } from "../utils/helpers";
 
 const ROLES = [
   { value: "CIVILIAN", label: "Citizen",  icon: User,      desc: "General public" },
   { value: "LAWYER",   label: "Lawyer",   icon: Briefcase, desc: "Legal practitioner" },
   { value: "JUDGE",    label: "Judge",    icon: Gavel,     desc: "Judicial officer" },
-  { value: "POLICE",   label: "Police",   icon: Shield,    desc: "Law enforcement" },
 ];
 
 export default function RegisterPage() {
@@ -34,10 +34,11 @@ export default function RegisterPage() {
     setError("");
     setLoading(true);
     try {
-      await register(fullName, email, password, role);
-      navigate('/dashboard', { replace: true });
+      const result = await register(fullName, email, password, role);
+      sessionStorage.setItem("nyayaai_pending_email", email.trim().toLowerCase());
+      navigate('/verify-otp', { replace: true, state: { maskedEmail: result.email } });
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed. Please try again.");
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }

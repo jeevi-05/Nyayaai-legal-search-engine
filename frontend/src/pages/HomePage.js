@@ -44,7 +44,7 @@ const FEATURES = [
   {
     icon: Shield,
     title: "Secure Legal Workspace",
-    desc: "Role-based access for citizens, lawyers, judges, and police with JWT-secured sessions.",
+    desc: "Role-based access for citizens, lawyers, and judges with JWT-secured sessions.",
     badge: "Role-Based",
     color: "bg-navy-50 text-navy-600",
   },
@@ -57,7 +57,7 @@ const STATS = [
   { value: "24/7", label: "Availability" },
 ];
 
-const ROLES = ["Citizen", "Judge", "Lawyers", "Investigation Officer"];
+const ROLES = ["Citizen", "Judge", "Lawyers"];
 
 function FeatureCard({ icon: Icon, title, desc, badge, color }) {
   return (

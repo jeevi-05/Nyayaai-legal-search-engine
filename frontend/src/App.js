@@ -13,6 +13,7 @@ import RoleRedirect from "./components/RoleRedirect";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import VerifyOtpPage from "./pages/VerifyOtpPage";
 import DashboardPage from "./pages/DashboardPage";
 import ModeSelectionPage from "./pages/ModeSelectionPage";
 import JudgmentComparisonPage from "./pages/JudgmentComparisonPage";
@@ -86,6 +87,11 @@ element={<LoginPage />}
 <Route
 path="/register"
 element={<RegisterPage />}
+/>
+
+<Route
+path="/verify-otp"
+element={<VerifyOtpPage />}
 />
 
 

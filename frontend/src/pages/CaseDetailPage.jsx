@@ -120,6 +120,7 @@ export default function CaseDetailPage() {
 
   const [caseData,   setCaseData]   = useState(null);
   const [loading,    setLoading]    = useState(true);
+  const [loadError,  setLoadError]  = useState("");
   const [addStatus,  setAddStatus]  = useState("idle"); // idle | loading | done | error
   const [addMsg,     setAddMsg]     = useState("");
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -128,10 +129,11 @@ export default function CaseDetailPage() {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
+    setLoadError("");
     setPdfError("");
     getCaseDetail(id)
       .then((res) => setCaseData(res.data.data))
-      .catch(() => setPdfError("Failed to load case details. Please try again."))
+      .catch(() => setLoadError("Failed to load case details. Please try again."))
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -197,7 +199,7 @@ export default function CaseDetailPage() {
     );
   }
 
-  if (pdfError) {
+  if (loadError) {
     return (
       <div className="max-w-4xl mx-auto space-y-4">
         <button onClick={() => navigate(-1)} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-navy-600 transition-colors">
@@ -208,7 +210,7 @@ export default function CaseDetailPage() {
             <AlertCircle size={24} className="text-red-500" />
           </div>
           <p className="font-semibold text-navy-600 mb-1">Could not load case</p>
-          <p className="text-sm text-gray-400 mb-5">{pdfError}</p>
+          <p className="text-sm text-gray-400 mb-5">{loadError}</p>
           <button onClick={() => navigate(-1)} className="btn-outline px-6 py-2.5 rounded-xl">
             Go Back
           </button>

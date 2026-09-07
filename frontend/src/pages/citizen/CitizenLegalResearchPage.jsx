@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchCases } from "../../services/researchService";
-import { Search, Scale, Building2, Calendar, Tag, AlertCircle, FileSearch, ArrowRight } from "lucide-react";
+import { Search, Scale, Building2, Calendar, Tag, AlertCircle, FileSearch, Download } from "lucide-react";
 
 function ResultCard({ item, onOpen }) {
   const docId = item.doc_id || item.external_id;
   return (
-    <div className="card p-5 space-y-3">
+    <div
+      className={`card p-5 space-y-3 transition-colors ${docId ? "cursor-pointer hover:border-gold-400" : ""}`}
+      onClick={() => docId && onOpen(docId)}
+      onKeyDown={(event) => {
+        if (docId && (event.key === "Enter" || event.key === " ")) onOpen(docId);
+      }}
+      role={docId ? "button" : undefined}
+      tabIndex={docId ? 0 : undefined}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-navy-600 text-sm leading-snug">{item.title}</h2>
@@ -31,10 +39,10 @@ function ResultCard({ item, onOpen }) {
       )}
       {docId && (
         <button
-          onClick={() => onOpen(docId)}
+          onClick={(event) => { event.stopPropagation(); onOpen(docId); }}
           className="btn-primary w-full py-2.5 rounded-xl text-sm"
         >
-          View Full Judgment <ArrowRight size={14} />
+          View Full Judgment & Download PDF <Download size={14} />
         </button>
       )}
     </div>

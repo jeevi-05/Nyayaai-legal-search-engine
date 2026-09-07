@@ -134,6 +134,12 @@ class SemanticSearchService:
 
                     "id": doc.id,
 
+                    # Search results can originate from an uploaded/local document
+                    # which has no Indian Kanoon external ID.  Give those documents a
+                    # stable route key so the UI can still open and download them.
+                    "doc_id": doc.external_id or f"local-{doc.id}",
+                    "external_id": doc.external_id,
+
                     "title": doc.title,
 
                     "category":

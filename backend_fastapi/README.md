@@ -43,18 +43,34 @@ Edit `.env` and set your PostgreSQL credentials:
 DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/nyayaai
 ```
 
-### 4. Create the database
+### 4. Configure email verification (Gmail)
+
+Registration creates a pending account, sends a four-digit OTP, and creates the user only after the OTP is verified. To send OTPs to real email addresses, configure a sender Gmail account in `.env`:
+
+```env
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-sender@gmail.com
+SMTP_PASSWORD=your-16-character-google-app-password
+SMTP_FROM_EMAIL=your-sender@gmail.com
+SMTP_FROM_NAME=NyayaAI Legal Intelligence
+SMTP_USE_SSL=false
+```
+
+Create the App Password from the sender account's Google Account security settings after enabling two-step verification. Do not use the normal Gmail password and never commit the App Password. The recipient may be any valid email address, including a Gmail address.
+
+### 5. Create the database
 ```sql
 CREATE DATABASE nyayaai;
 ```
 
-### 5. Run database migrations (optional — app auto-creates tables on startup)
+### 6. Run database migrations (optional — app auto-creates tables on startup)
 ```bash
 alembic revision --autogenerate -m "initial"
 alembic upgrade head
 ```
 
-### 6. Start the server
+### 7. Start the server
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
 ```

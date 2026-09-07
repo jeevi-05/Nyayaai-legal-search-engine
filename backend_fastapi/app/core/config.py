@@ -33,6 +33,16 @@ class Settings(BaseSettings):
     ECOURTS_API_TOKEN: str = ""
     ECOURTS_API_BASE_URL: str = "https://webapi.ecourtsindia.com"
 
+    # Registration email verification; credentials remain backend-only.
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM_EMAIL: str = ""
+    SMTP_FROM_NAME: str = "NyayaAI Legal Intelligence"
+    SMTP_USE_SSL: bool = False
+    SMTP_TIMEOUT_SECONDS: int = 20
+
     @property
     def allowed_origins_list(self) -> list[str]:
         return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]

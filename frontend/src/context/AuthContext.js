@@ -52,37 +52,26 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const res = await authService.login(email, password);
-    
-    const { token, user: userData } = res.data.data;
-    
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-    
-    setUser(userData);
-    
-    // Set mode based on user's role (store full mode object for consumers)
-    const userMode = getModeForRole(userData.role);
-    setMode(getModeById(userMode));
-    localStorage.setItem("nyayaai_mode", userMode);
-    
-    return userData;
+    return establishSession(res.data.data);
   };
 
   const register = async (fullName, email, password, role) => {
     const res = await authService.register(fullName, email, password, role);
-    
-    const { token, user: userData } = res.data.data;
-    
+    return res.data.data;
+  };
+
+  const verifyRegistration = async (email, otp) => {
+    const res = await authService.verifyOtp(email, otp);
+    return establishSession(res.data.data);
+  };
+
+  const establishSession = ({ token, user: userData }) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
-    
     setUser(userData);
-    
-    // Set mode based on user's role (store full mode object for consumers)
     const userMode = getModeForRole(userData.role);
     setMode(getModeById(userMode));
     localStorage.setItem("nyayaai_mode", userMode);
-    
     return userData;
   };
 
@@ -102,6 +91,7 @@ export function AuthProvider({ children }) {
         mode,
         login,
         register,
+        verifyRegistration,
         logout
       }}
     >

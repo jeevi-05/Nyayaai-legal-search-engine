@@ -19,6 +19,18 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
+  if (user.role === "POLICE") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="max-w-md text-center px-6">
+          <h2 className="text-2xl font-bold text-navy-600 mb-3">Access unavailable</h2>
+          <p className="text-gray-600 mb-6">This application area is not available for this account.</p>
+          <a href="/login" className="btn-primary px-6 py-2.5 rounded-xl">Return to Sign In</a>
+        </div>
+      </div>
+    );
+  }
+
   // Check if user has access to current mode
   if (mode && !hasModeAccess(user.role, mode.id)) {
     return (

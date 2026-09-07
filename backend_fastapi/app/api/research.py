@@ -83,7 +83,7 @@ def get_case_detail(
          - If found but judgment_text is empty → enrich from IK then return.
       2. If not in DB → fetch from Indian Kanoon, process, persist, return.
     """
-    doc = document_repository.get_by_external_id(db, external_id)
+    doc = _get_document_by_case_key(db, external_id)
 
     # ── Case already fully processed ─────────────────────────────────────────
     if doc and doc.judgment_text and doc.case_facts:
@@ -95,6 +95,14 @@ def get_case_detail(
         return {"success": True, "data": detail}
 
     # ── Fetch full detail from Indian Kanoon ──────────────────────────────────
+    # Local repository documents do not have an Indian Kanoon identifier. Their
+    # stored details are still useful and can be downloaded as a generated PDF.
+    if doc and _is_local_case_key(external_id):
+        detail = _doc_to_detail(doc)
+        detail["ai_analysis"] = decision_support_service.analyze(doc, doc.title)
+        detail["similar_cases"] = _get_similar(db, doc)
+        return {"success": True, "data": detail}
+
     ik_data = indian_kanoon_service.fetch_document_metadata(external_id)
 
     if not ik_data:
@@ -199,7 +207,7 @@ def download_case_pdf(
     Checks local pdf_path first; downloads/generates from IK if not cached.
     Returns 200 with PDF, 404 if case not found, 500 on generation failure.
     """
-    doc = document_repository.get_by_external_id(db, external_id)
+    doc = _get_document_by_case_key(db, external_id)
 
     if not doc:
         return JSONResponse(
@@ -212,17 +220,25 @@ def download_case_pdf(
             },
         )
 
-    # Check cached path first
-    if doc.pdf_path and os.path.isfile(doc.pdf_path):
+    # Check an uploaded/cached PDF first. Local repository documents commonly
+    # use file_path while Indian Kanoon documents use pdf_path.
+    cached_pdf_path = next(
+        (
+            path for path in (doc.pdf_path, doc.file_path)
+            if path and path.lower().endswith(".pdf") and os.path.isfile(path)
+        ),
+        None,
+    )
+    if cached_pdf_path:
         return FileResponse(
-            path=doc.pdf_path,
+            path=cached_pdf_path,
             media_type="application/pdf",
-            filename=os.path.basename(doc.pdf_path),
+            filename=os.path.basename(cached_pdf_path),
         )
 
     # Generate PDF from judgment_text (fallback - always available for processed cases)
     title = doc.title or external_id
-    judgment_text = doc.judgment_text or ""
+    judgment_text = doc.judgment_text or doc.extracted_text or doc.description or ""
     
     if not judgment_text.strip():
         return JSONResponse(
@@ -457,6 +473,17 @@ def _norm(title: str) -> str:
     return re.sub(r"[^a-z0-9 ]", "", title.lower()).strip()
 
 
+def _is_local_case_key(case_key: str) -> bool:
+    return case_key.startswith("local-") and case_key[6:].isdigit()
+
+
+def _get_document_by_case_key(db: Session, case_key: str) -> LegalDocument | None:
+    """Resolve either an Indian Kanoon external ID or a local-document route key."""
+    if _is_local_case_key(case_key):
+        return document_repository.get_by_id(db, int(case_key[6:]))
+    return document_repository.get_by_external_id(db, case_key)
+
+
 def _doc_to_detail(doc: LegalDocument) -> dict:
     return {
         "id":             doc.id,
@@ -470,7 +497,7 @@ def _doc_to_detail(doc: LegalDocument) -> dict:
         "judges":         doc.judges,
         "description":    doc.description,
         "summary":        doc.summary,
-        "judgment_text":  doc.judgment_text,
+        "judgment_text":  doc.judgment_text or doc.extracted_text or doc.description,
         "acts_sections":  doc.acts_sections,
         "case_facts":     doc.case_facts,
         "legal_issues":   doc.legal_issues,

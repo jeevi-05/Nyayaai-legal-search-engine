@@ -41,3 +41,11 @@ export function register(
     );
 
 }
+
+export function verifyOtp(email, otp) {
+    return api.post("/auth/verify-otp", { email, otp });
+}
+
+export function resendOtp(email) {
+    return api.post("/auth/resend-otp", { email });
+}

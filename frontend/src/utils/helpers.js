@@ -4,6 +4,7 @@ export const isAuthenticated = () => !!getToken();
 
 export const getErrorMessage = (error) =>
   error?.response?.data?.message ||
+  error?.response?.data?.detail ||
   error?.message ||
   "Something went wrong. Please try again.";
 
