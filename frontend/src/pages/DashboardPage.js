@@ -59,6 +59,7 @@ const FEATURE_ICONS = {
   'citizen-legal-research': Search,
   'citizen-legal-repository': BookOpen,
   'citizen-case-analysis': FileText,
+  'citizen-legal-draft-generator': FileText,
   'judge-comparison': Scale,
   'judge-precedents': Search,
   'judge-reasoning': Brain,
@@ -75,6 +76,7 @@ function getFeatureColor(featureId) {
     'citizen-legal-research': 'bg-blue-50 text-blue-600',
     'citizen-legal-repository': 'bg-purple-50 text-purple-600',
     'citizen-case-analysis': 'bg-amber-50 text-amber-600',
+    'citizen-legal-draft-generator': 'bg-gold-50 text-gold-700',
     'judge-comparison': 'bg-purple-50 text-purple-600',
     'judge-precedents': 'bg-blue-50 text-blue-600',
     'judge-reasoning': 'bg-amber-50 text-amber-600',
@@ -97,6 +99,13 @@ const JUDGE_MODE = {
   icon: '⚖️',
 };
 
+const CIVILIAN_MODE = {
+  id: 'civilian',
+  name: 'Citizen Legal Assistance',
+  description: 'Clear legal guidance and helpful tools for citizens.',
+  icon: '⚖️',
+};
+
 function LawyerDashboard({ user, documentCount, mode }) {
   const lawyerActions = [
     { title: "Advanced Research", desc: "AI-powered legal research using Indian Kanoon judgments, acts and precedents.", path: "/lawyer/advanced-research", icon: Search, color: "bg-blue-50 text-blue-600" },
@@ -105,13 +114,13 @@ function LawyerDashboard({ user, documentCount, mode }) {
     { title: "Case Brief Generation", desc: "Convert lengthy judgments into structured advocate briefs.", path: "/lawyer/case-brief-generation", icon: FileText, color: "bg-emerald-50 text-emerald-600" },
   ];
   return <div className="space-y-8">
-    <div className="bg-navy-600 rounded-3xl p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-5 relative overflow-hidden">
+    <div className="nyaya-hero min-h-[260px] sm:h-[296px] p-7 sm:p-9 flex flex-col justify-center items-start gap-5 text-left">
       <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/5 pointer-events-none" />
       <div className="absolute right-20 bottom-0 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
-      <div className="relative z-10"><div className="flex items-center gap-2 mb-2"><LayoutDashboard size={16} className="text-gold-400" /><span className="text-gold-400 text-xs font-semibold uppercase tracking-widest">LAWYER DASHBOARD</span></div><h1 className="text-2xl font-bold text-white">Welcome back, {user?.fullName}</h1><p className="text-navy-200 text-sm mt-1">AI-powered legal research assistant for advocates.</p></div>
-      <span className="badge bg-blue-100 text-blue-700 text-sm px-4 py-2 font-bold relative z-10">LAWYER</span>
+      <div className="relative z-10 text-left"><div className="flex items-center gap-2 mb-2"><LayoutDashboard size={16} className="text-gold-400" /><span className="text-gold-400 text-xs font-semibold uppercase tracking-widest">LAWYER DASHBOARD</span></div><h1 className="text-2xl font-bold text-white">Welcome back, {user?.fullName}</h1><p className="text-navy-200 text-sm mt-1">AI-powered legal research assistant for advocates.</p></div>
+      <span className="badge bg-blue-100 text-blue-700 text-sm px-4 py-2 font-bold relative z-10 self-start">LAWYER</span>
     </div>
-    <div className="bg-navy-50 border border-navy-100 rounded-2xl p-5"><div className="flex items-start gap-3"><div className="w-10 h-10 rounded-lg flex items-center justify-center bg-navy-100"><span className="text-2xl">{mode.icon}</span></div><div className="flex-1"><h3 className="font-semibold text-navy-900">Legal Research</h3><p className="text-sm text-navy-700 mt-1">For lawyers, advocates, law students and legal researchers</p></div></div></div>
+    <div className="bg-[#f0ede4] border border-[#e2dccd] rounded-xl p-5"><div className="flex items-start gap-3"><div className="w-10 h-10 rounded-lg flex items-center justify-center bg-gold-100"><span className="text-2xl">{mode.icon}</span></div><div className="flex-1"><h3 className="font-semibold text-navy-900">Legal Research</h3><p className="text-sm text-navy-700 mt-1">For lawyers, advocates, law students and legal researchers</p></div></div></div>
     <div><h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Overview</h2><div className="grid grid-cols-2 lg:grid-cols-4 gap-4"><StatCard icon={BookOpen} label="Legal Documents" value={documentCount} sub="Repository records" color="bg-blue-50 text-blue-600" /><StatCard icon={Users} label="Role" value="LAWYER" sub="Role" color="bg-purple-50 text-purple-600" /><StatCard icon={Search} label="Research" value="Active" sub="Case search enabled" color="bg-emerald-50 text-emerald-600" /><StatCard icon={Brain} label="AI Support" value="Ready" sub="Decision assistance" color="bg-amber-50 text-amber-600" /></div></div>
     <div><h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Quick Actions</h2><div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">{lawyerActions.map(action => <ActionCard key={action.title} {...action} />)}</div></div>
   </div>;
@@ -149,9 +158,11 @@ export default function DashboardPage() {
     { id: "citizen-legal-repository", name: "Legal Repository", description: "Explore Indian legal documents", path: "/citizen/legal-repository" },
     { id: "citizen-case-analysis", name: "Case Analysis", description: "Upload documents and get AI insights", path: "/citizen/case-analysis" },
     { id: "citizen-find-lawyer", name: "Find a Lawyer", description: "Find lawyers associated with relevant court cases", path: "/find-lawyer" },
+    { id: "citizen-legal-draft-generator", name: "AI Legal Draft Generator", description: "Create structured legal drafts from your case information with AI assistance.", path: "/citizen/legal-draft-generator" },
   ];
   const isJudge = user?.role === "JUDGE";
-  const dashboardMode = isJudge ? JUDGE_MODE : mode;
+  const isCivilian = user?.role === "CIVILIAN";
+  const dashboardMode = isJudge ? JUDGE_MODE : isCivilian ? CIVILIAN_MODE : mode;
   const quickActions = isJudge ? JUDGE_ACTIONS : user?.role === "CIVILIAN" ? citizenActions : mode.features.slice(0, 4);
 
   if (user?.role === "LAWYER") return <LawyerDashboard user={user} documentCount={documentCount} mode={mode} />;
@@ -160,10 +171,10 @@ export default function DashboardPage() {
     <div className="space-y-8">
 
       {/* Welcome banner */}
-      <div className="bg-navy-600 rounded-3xl p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-5 relative overflow-hidden">
+      <div className="nyaya-hero min-h-[260px] sm:h-[296px] p-7 sm:p-9 flex flex-col justify-center items-start gap-5 text-left">
         <div className="absolute -right-10 -top-10 w-48 h-48 rounded-full bg-white/5 pointer-events-none" />
         <div className="absolute right-20 bottom-0 w-32 h-32 rounded-full bg-white/5 pointer-events-none" />
-        <div className="relative z-10">
+        <div className="relative z-10 text-left">
           <div className="flex items-center gap-2 mb-2">
             <LayoutDashboard size={16} className="text-gold-400" />
             <span className="text-gold-400 text-xs font-semibold uppercase tracking-widest">Dashboard</span>
@@ -171,23 +182,25 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-white">Welcome back, {user?.fullName}</h1>
           <p className="text-navy-200 text-sm mt-1">{user?.email}</p>
         </div>
-        <span className={`badge ${roleColor} text-sm px-4 py-2 font-bold relative z-10`}>
+        <span className={`badge ${roleColor} text-sm px-4 py-2 font-bold relative z-10 self-start`}>
           {dashboard.role}
         </span>
       </div>
 
-      {/* Mode Info */}
-      <div className="bg-navy-50 border border-navy-100 rounded-2xl p-5">
-        <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-navy-100">
-            <span className="text-2xl">{dashboardMode.icon}</span>
-          </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-navy-900">{dashboardMode.name}</h3>
-            <p className="text-sm text-navy-700 mt-1">{dashboardMode.description}</p>
+      {/* Civilian-specific guidance card */}
+      {isCivilian && (
+        <div className="bg-[#f0ede4] border border-[#e2dccd] rounded-xl p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-100">
+              <span className="text-2xl">{dashboardMode.icon}</span>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-navy-900">{dashboardMode.name}</h3>
+              <p className="text-sm text-navy-700 mt-1">{dashboardMode.description}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Stats */}
       <div>

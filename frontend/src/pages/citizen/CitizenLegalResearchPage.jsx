@@ -86,19 +86,19 @@ export default function CitizenLegalResearchPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-navy-600 rounded-3xl p-7 relative overflow-hidden">
+      <div className="nyaya-hero p-7 sm:p-9">
         <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <Search size={15} className="text-navy-300" />
             <span className="text-navy-300 text-xs font-semibold uppercase tracking-widest">Legal Research</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Search Legal Information</h1>
+          <h1 className="text-3xl font-normal text-white">Search Legal Information</h1>
           <p className="text-navy-200 text-sm mt-1">Search cases, acts, and judgments using AI-powered semantic search</p>
         </div>
       </div>
 
-      <div className="card p-5">
+      <div className="card p-4 sm:p-5 border-gold-200/60">
         <form onSubmit={handleSearch} className="flex gap-3">
           <div className="relative flex-1">
             <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />

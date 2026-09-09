@@ -32,13 +32,13 @@ export default function Navbar() {
   const roleName = user ? ROLE_NAMES[user.role] || user.role : null;
 
   return (
-    <nav className="bg-navy-600 shadow-nav sticky top-0 z-50">
+    <nav className="bg-navy-800/95 backdrop-blur border-b border-white/10 shadow-nav sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 shrink-0" onClick={() => setMobileOpen(false)}>
-            <div className="w-9 h-9 bg-gold-400 rounded-lg flex items-center justify-center shadow-sm">
+            <div className="w-9 h-9 bg-gold-400 rounded-md flex items-center justify-center shadow-sm">
               <Scale size={20} className="text-navy-700" strokeWidth={2.5} />
             </div>
             <div className="leading-none">
@@ -110,7 +110,7 @@ export default function Navbar() {
                 <div className="relative hidden md:block">
                   <button
                     onClick={() => setProfileOpen((v) => !v)}
-                    className="flex items-center gap-2 bg-white/10 hover:bg-white/20 rounded-xl pl-1.5 pr-3 py-1.5 transition-all"
+                    className="flex items-center gap-2 bg-white/10 hover:bg-white/20 rounded-lg pl-1.5 pr-3 py-1.5 transition-all"
                   >
                     <div className="w-7 h-7 rounded-lg bg-gold-400 flex items-center justify-center">
                       <span className="text-navy-700 font-bold text-xs">

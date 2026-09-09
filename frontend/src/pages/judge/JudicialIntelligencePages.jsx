@@ -3,7 +3,7 @@ import { AlertCircle, ArrowDown, BookOpen, Brain, FileSearch, Gavel, GitBranch, 
 import { analyzePrecedents, compareJudgments, getLegalReasoning, listJudgeJudgments, synthesizeCaseLaw } from "../../services/judgeService";
 
 function Header({ icon: Icon, eyebrow, title, description }) {
-  return <div className="bg-navy-600 rounded-3xl p-7 text-white"><div className="flex items-center gap-2 text-gold-400 text-xs font-semibold uppercase tracking-widest"><Icon size={15} />{eyebrow}</div><h1 className="text-2xl font-bold mt-2">{title}</h1><p className="text-navy-200 text-sm mt-1">{description}</p></div>;
+  return <div className="nyaya-hero p-7 sm:p-9 text-white"><div className="flex items-center gap-2 text-gold-300 text-[10px] font-bold uppercase tracking-[.18em]"><Icon size={15} />{eyebrow}</div><h1 className="text-3xl font-normal mt-3">{title}</h1><p className="text-navy-100 text-sm mt-2 max-w-2xl">{description}</p></div>;
 }
 function Notice({ error }) { return error ? <div className="flex gap-2 bg-red-50 text-red-700 border border-red-200 rounded-xl p-4 text-sm"><AlertCircle size={16} />{error}</div> : null; }
 function Loader({ loading }) { return loading ? <div className="text-sm text-navy-600 animate-pulse">Generating judicial intelligence…</div> : null; }

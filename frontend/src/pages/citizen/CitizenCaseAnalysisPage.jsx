@@ -215,14 +215,14 @@ export default function CitizenCaseAnalysisPage() {
   if (result) {
     return (
       <div className="space-y-6">
-        <div className="bg-navy-600 rounded-3xl p-7 relative overflow-hidden">
+        <div className="nyaya-hero p-7 sm:p-9">
           <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
           <div className="relative z-10">
             <div className="flex items-center gap-2 mb-2">
               <Brain size={15} className="text-navy-300" />
               <span className="text-navy-300 text-xs font-semibold uppercase tracking-widest">Case Analysis</span>
             </div>
-            <h1 className="text-2xl font-bold text-white">Analysis Results</h1>
+            <h1 className="text-3xl font-normal text-white">Analysis Results</h1>
             <p className="text-navy-200 text-sm mt-1">AI-powered insights from your uploaded document</p>
           </div>
         </div>
@@ -239,14 +239,14 @@ export default function CitizenCaseAnalysisPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <div className="bg-navy-600 rounded-3xl p-7 relative overflow-hidden">
+      <div className="nyaya-hero p-7 sm:p-9">
         <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <Brain size={15} className="text-navy-300" />
             <span className="text-navy-300 text-xs font-semibold uppercase tracking-widest">Case Analysis</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Upload & Analyse Document</h1>
+          <h1 className="text-3xl font-normal text-white">Upload & Analyse Document</h1>
           <p className="text-navy-200 text-sm mt-1">Upload your legal document and get AI-powered insights</p>
         </div>
       </div>
@@ -261,7 +261,7 @@ export default function CitizenCaseAnalysisPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Step 1: Upload */}
-        <div className="card p-6 space-y-4">
+        <div className="card p-6 space-y-4 border-gold-200/60">
           <div>
             <p className="text-xs font-bold text-emerald-600 uppercase tracking-widest">Step 1</p>
             <h2 className="font-semibold text-navy-600 text-sm mt-0.5">Upload Legal Document</h2>

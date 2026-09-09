@@ -116,19 +116,19 @@ export default function CitizenAskQuestionPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <div className="bg-navy-600 rounded-3xl p-7 relative overflow-hidden">
+      <div className="nyaya-hero p-7 sm:p-9">
         <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <Scale size={15} className="text-navy-300" />
             <span className="text-navy-300 text-xs font-semibold uppercase tracking-widest">AI Legal Assistant</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Ask Your Legal Question</h1>
+          <h1 className="text-3xl font-normal text-white">Ask Your Legal Question</h1>
           <p className="text-navy-200 text-sm mt-1">Get citizen-friendly answers backed by Indian legal documents</p>
         </div>
       </div>
 
-      <div className="card flex flex-col" style={{ height: "540px" }}>
+      <div className="card flex flex-col overflow-hidden" style={{ height: "540px" }}>
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
           {messages.map((msg, i) =>
             msg.role === "user"

@@ -19,9 +19,9 @@ export default function ModeLayout() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-[#f7f5ef]">
       <Navbar />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 page-enter">
         <Outlet />
       </main>
       <footer className={`bg-${mode.color}-600 border-t border-white/10 mt-auto`}>

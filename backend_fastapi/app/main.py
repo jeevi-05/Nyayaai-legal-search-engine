@@ -21,6 +21,7 @@ from app.api import (
     judge,
     lawyer,
     citizen_lawyers,
+    citizen_legal_drafts,
 )
 
 from app.services import dataset_loader
@@ -191,6 +192,11 @@ app.include_router(
 
 app.include_router(
     citizen_lawyers.router,
+    prefix=API_PREFIX
+)
+
+app.include_router(
+    citizen_legal_drafts.router,
     prefix=API_PREFIX
 )
 

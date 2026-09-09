@@ -39,9 +39,9 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="mb-7">
+      <div className="mb-8">
         <p className="section-label">Secure Access</p>
-        <h2 className="text-2xl font-bold text-navy-600">Welcome Back</h2>
+        <h2 className="text-3xl font-normal text-navy-800">Welcome Back</h2>
         <p className="text-gray-500 text-sm mt-1">Sign in to your NyayaAI account</p>
       </div>
 

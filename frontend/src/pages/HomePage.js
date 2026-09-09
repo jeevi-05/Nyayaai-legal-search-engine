@@ -82,18 +82,18 @@ export default function HomePage() {
     <div className="space-y-20 py-4">
 
       {/* Hero */}
-      <section className="text-center max-w-4xl mx-auto pt-8">
-        <div className="inline-flex items-center gap-2 bg-navy-50 border border-navy-100 text-navy-600 text-xs font-semibold px-4 py-2 rounded-full mb-6">
-          <Zap size={12} className="text-gold-500" />
+      <section className="nyaya-hero text-center max-w-6xl mx-auto px-6 sm:px-12 py-16 sm:py-20">
+        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-white text-xs font-semibold px-4 py-2 rounded-md mb-6">
+          <Zap size={12} className="text-gold-300" />
           AI-Powered · Indian Legal System · Trusted by Professionals
         </div>
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy-600 leading-tight mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal text-white leading-tight mb-6">
           AI-Powered Legal Intelligence<br />
-          <span className="text-gold-400">for Indian Law</span>
+          <span className="text-gold-300">for Indian Law</span>
         </h1>
 
-        <p className="text-gray-500 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
+        <p className="text-navy-100 text-lg leading-relaxed mb-10 max-w-2xl mx-auto">
           Search judgments, analyze precedents, explore legal documents and simplify legal research with artificial intelligence — built for the Indian judiciary.
         </p>
 
@@ -109,8 +109,8 @@ export default function HomePage() {
         {/* Roles */}
         <div className="flex flex-wrap justify-center gap-2">
           {ROLES.map((r) => (
-            <span key={r} className="inline-flex items-center gap-1.5 text-xs text-gray-500 bg-white border border-gray-200 px-3 py-1.5 rounded-full shadow-sm">
-              <CheckCircle size={11} className="text-emerald-500" />
+            <span key={r} className="inline-flex items-center gap-1.5 text-xs text-white/85 bg-white/10 border border-white/15 px-3 py-1.5 rounded-md">
+              <CheckCircle size={11} className="text-gold-300" />
               {r}
             </span>
           ))}

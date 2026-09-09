@@ -19,6 +19,7 @@ import ModeSelectionPage from "./pages/ModeSelectionPage";
 import JudgmentComparisonPage from "./pages/JudgmentComparisonPage";
 import JudgeRoute from "./components/JudgeRoute";
 import LawyerRoute from "./components/LawyerRoute";
+import CitizenRoute from "./components/CitizenRoute";
 import { JudgeJudgmentComparisonPage, JudgePrecedentAnalysisPage, JudgeLegalReasoningPage, JudgeCaseLawSynthesisPage } from "./pages/judge/JudicialIntelligencePages";
 
 import RepositoryPage from "./pages/RepositoryPage";
@@ -32,6 +33,7 @@ import CitizenAskQuestionPage from "./pages/citizen/CitizenAskQuestionPage";
 import CitizenLegalResearchPage from "./pages/citizen/CitizenLegalResearchPage";
 import CitizenLegalRepositoryPage from "./pages/citizen/CitizenLegalRepositoryPage";
 import CitizenCaseAnalysisPage from "./pages/citizen/CitizenCaseAnalysisPage";
+import LegalDraftGeneratorPage from "./pages/citizen/LegalDraftGeneratorPage";
 import FindLawyerPage, { LawyerProfilePage, LawyerCaseDetailPage } from "./pages/citizen/FindLawyerPage";
 import AdvancedResearch from "./pages/lawyer/AdvancedResearch";
 import ArgumentResearch from "./pages/lawyer/ArgumentResearch";
@@ -267,6 +269,7 @@ element={
 <Route path="/citizen/legal-research" element={<ProtectedRoute><CitizenLegalResearchPage /></ProtectedRoute>} />
 <Route path="/citizen/legal-repository" element={<ProtectedRoute><CitizenLegalRepositoryPage /></ProtectedRoute>} />
 <Route path="/citizen/case-analysis" element={<ProtectedRoute><CitizenCaseAnalysisPage /></ProtectedRoute>} />
+<Route path="/citizen/legal-draft-generator" element={<CitizenRoute><LegalDraftGeneratorPage /></CitizenRoute>} />
 
 
 </Route>

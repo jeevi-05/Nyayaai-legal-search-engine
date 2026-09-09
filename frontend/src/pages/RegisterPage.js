@@ -46,9 +46,9 @@ export default function RegisterPage() {
 
   return (
     <>
-      <div className="mb-6">
+      <div className="mb-8">
         <p className="section-label">Join NyayaAI</p>
-        <h2 className="text-2xl font-bold text-navy-600">Create Your Account</h2>
+        <h2 className="text-3xl font-normal text-navy-800">Create Your Account</h2>
         <p className="text-gray-500 text-sm mt-1">Access AI-powered Indian legal research</p>
       </div>
 
@@ -98,16 +98,16 @@ export default function RegisterPage() {
         {/* Role selector */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">I am a...</label>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {ROLES.map(({ value, label, icon: Icon, desc }) => (
               <button
                 key={value}
                 type="button"
                 onClick={() => setRole(value)}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border-2 text-left transition-all ${
+                className={`flex items-center gap-2.5 px-3 py-3 rounded-lg border text-left transition-all ${
                   role === value
-                    ? "border-navy-600 bg-navy-50 text-navy-700"
-                    : "border-gray-200 text-gray-600 hover:border-navy-300 hover:bg-gray-50"
+                    ? "border-gold-500 bg-gold-50 text-navy-800 shadow-sm"
+                    : "border-[#ded9ce] text-gray-600 hover:border-gold-300 hover:bg-[#fcfaf4]"
                 }`}
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${

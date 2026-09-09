@@ -12,7 +12,7 @@ export default function AuthLayout() {
     <div className="min-h-screen flex bg-slate-50">
 
       {/* Left branding panel */}
-      <div className="hidden lg:flex lg:w-[46%] bg-navy-600 flex-col justify-between px-12 py-12 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-[48%] flex-col justify-between px-12 py-12 relative overflow-hidden bg-navy-800" style={{ backgroundImage: "linear-gradient(135deg, rgba(9,20,34,.95), rgba(16,32,53,.82)), url('/assets/backgrounds/judicial-architecture-hero.png')", backgroundSize: "cover", backgroundPosition: "center" }}>
 
         {/* Decorative circles */}
         <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/5 pointer-events-none" />
@@ -34,7 +34,7 @@ export default function AuthLayout() {
         <div className="relative z-10 space-y-6">
           <div>
             <p className="section-label text-gold-400">Trusted by Legal Professionals</p>
-            <h2 className="text-3xl font-bold text-white leading-snug mt-2">
+            <h2 className="text-4xl font-normal text-white leading-[1.1] mt-2">
               Empowering Citizens &<br />Legal Professionals
             </h2>
             <p className="text-navy-200 mt-4 leading-relaxed text-sm max-w-xs">
@@ -81,7 +81,7 @@ export default function AuthLayout() {
             </Link>
           </div>
 
-          <div className="bg-white rounded-3xl shadow-card-hover border border-gray-100 p-8">
+          <div className="bg-white rounded-2xl shadow-card-hover border border-[#e8e4da] p-8 sm:p-10 page-enter">
             <Outlet />
           </div>
 

@@ -1,38 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  html { font-family: 'Inter', 'IBM Plex Sans', system-ui, sans-serif; }
-  body { @apply bg-slate-50 text-gray-900 antialiased; }
+  html { font-family: 'Inter', system-ui, sans-serif; scroll-behavior: smooth; }
+  body { @apply bg-[#f7f5ef] text-slate-800 antialiased; }
+  h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; letter-spacing: -0.025em; }
+  ::selection { @apply bg-gold-200 text-navy-900; }
+  button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 3px solid rgba(201, 168, 76, .45); outline-offset: 3px; }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 bg-navy-600 hover:bg-navy-700 text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center gap-2 bg-navy-700 hover:bg-navy-800 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 border-2 border-navy-600 text-navy-600 hover:bg-navy-600 hover:text-white font-semibold text-sm px-5 py-2.5 rounded-xl transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 border border-navy-600 text-navy-700 hover:bg-navy-700 hover:text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-200 disabled:opacity-50;
   }
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 bg-gold-400 hover:bg-gold-500 text-navy-700 font-bold text-sm px-5 py-2.5 rounded-xl transition-all duration-200 shadow-sm;
+    @apply inline-flex items-center justify-center gap-2 bg-gold-400 hover:bg-gold-500 text-navy-900 font-bold text-sm px-5 py-2.5 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md;
   }
   .card {
-    @apply bg-white rounded-2xl border border-gray-100 shadow-card hover:shadow-card-hover transition-all duration-200;
+    @apply bg-white rounded-xl border border-[#e8e4da] shadow-[0_1px_2px_rgba(20,36,58,.04)] hover:shadow-[0_12px_30px_rgba(20,36,58,.08)] transition-all duration-200;
   }
   .input-field {
-    @apply w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600 transition-all duration-150;
+    @apply w-full border border-[#ded9ce] rounded-lg px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 bg-[#fffefb] focus:outline-none focus:ring-4 focus:ring-gold-400/15 focus:border-gold-500 transition-all duration-150;
   }
   .section-label {
-    @apply text-xs font-semibold uppercase tracking-widest text-gold-500 mb-1;
+    @apply text-[10px] font-bold uppercase tracking-[0.18em] text-gold-600 mb-2;
   }
   .page-title {
-    @apply text-2xl font-bold text-navy-600;
+    @apply text-3xl font-normal text-navy-800 leading-tight;
   }
   .badge {
-    @apply inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full;
+    @apply inline-flex items-center gap-1 text-[11px] font-bold tracking-wide px-2.5 py-1 rounded-md;
   }
 }
 
@@ -42,7 +46,15 @@
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1eee7; }
+::-webkit-scrollbar-thumb { background: #a59d8f; border: 2px solid #f1eee7; border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: #1e3a5f; }
+
+.nyaya-hero { position: relative; overflow: hidden; border-radius: 1rem; background-color: #102035; background-image: linear-gradient(90deg, rgba(9,20,34,.97) 0%, rgba(16,32,53,.91) 46%, rgba(16,32,53,.60) 100%), url('../public/assets/backgrounds/judicial-architecture-hero.png'); background-position: center; background-size: cover; }
+.nyaya-hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(90deg, rgba(201,168,76,.12) 1px, transparent 1px), linear-gradient(rgba(201,168,76,.08) 1px, transparent 1px); background-size: 72px 72px; opacity: .25; pointer-events: none; }
+.nyaya-hero > * { position: relative; z-index: 1; }
+.archive-rule { height: 1px; background: linear-gradient(90deg, #c9a84c, #f2d98a, transparent); }
+@media (prefers-reduced-motion: no-preference) { .page-enter { animation: page-enter .35s ease-out both; } }
+@keyframes page-enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

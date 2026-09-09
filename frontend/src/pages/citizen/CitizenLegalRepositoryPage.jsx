@@ -97,21 +97,21 @@ export default function CitizenLegalRepositoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-navy-600 rounded-3xl p-7 relative overflow-hidden">
+      <div className="nyaya-hero p-7 sm:p-9">
         <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/5 pointer-events-none" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <BookOpen size={15} className="text-navy-300" />
             <span className="text-navy-300 text-xs font-semibold uppercase tracking-widest">Legal Repository</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">Legal Knowledge Library</h1>
+          <h1 className="text-3xl font-normal text-white">Legal Knowledge Library</h1>
           <p className="text-navy-200 text-sm mt-1">
             {loading ? "Loading..." : `${documents.length} document${documents.length !== 1 ? "s" : ""} — Acts, Landmark Cases & Judgments`}
           </p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 border-b border-[#ded9ce] pb-5">
         {CATEGORIES.map((cat) => {
           const meta = CATEGORY_META[cat];
           const Icon = meta.icon;
